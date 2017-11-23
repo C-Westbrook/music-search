@@ -17,72 +17,17 @@
         取消
       </div>
     </div>
-    <!-- <div class="hotkey" v-if="searchRes==null&&searchShow">
-      <div class="search-history">
-        <div class="search-history-item" v-for="item in searchHistory" @click="search(item)">{{item}}</div>
-      </div>
-      <ul>
-        <li v-for="(item,index) in hotkey" @click="search(item.k)">
-          <span class="hotkey-index">{{index+1}}</span>
-          <span class="hotkey-k">{{item.k}}</span>
-          <span class="hotkey-n">{{item.n | searchVol}}</span>
-        </li>
-      </ul>
-    </div> -->
     <div class="result" v-if="searchRes!=null&&searchShow">
       <div class="result-group" v-if="searchRes.song!=null">
-        <!-- <div class="group">
+         <div class="group">
           <img class="group-img" src="./../assets/icon-music.png">
           <p class="group-p">歌曲</p>
-        </div> -->
+        </div> 
         <div class="result-item" v-for="(item, index) in searchRes.song.itemlist">
           <p class="result-title" @click="play(index)">{{item.name}}</p>
           <p class="result-author" @click="play(index)">-{{item.singer}}</p>
-          <!-- <div class="action-button" @touchend.prevent="showMenu(index)" @click="showMenu(index)">
-            <img src="./../assets/icon-...black.png">
-          </div> -->
         </div>
-
       </div>
-
-     <!--  <div class="result-group" v-if="searchRes.album!=null">
-        <div class="group">
-          <img class="group-img" src="./../assets/icon-album.png">
-          <p class="group-p">专辑</p>
-        </div>
-        <div class="album-item" v-for="item in searchRes.album.itemlist" @click="showAlbum(item.mid)">
-          <img class="album-img" v-lazy="item.pic">
-          <div class="album-info">
-            <p class="album-name">{{item.name}}</p>
-            <p class="album-author">{{item.singer}}</p>
-          </div>
-        </div>
-      </div> -->
-
-      <!-- <div class="result-group" v-if="searchRes.singer!=null">
-        <div class="group">
-          <img class="group-img" src="./../assets/icon-singer.png">
-          <p class="group-p">歌手</p>
-        </div>
-        <div class="singer-item" v-for="item in searchRes.singer.itemlist" @click="showSinger(item.mid)">
-          <img class="singer-img" v-lazy="item.pic">
-          <div class="singer-p">
-            <p>{{item.name}}</p>
-          </div>
-        </div>
-      </div> -->
-
-      <!-- <div class="result-group" v-if="searchRes.mv!=null">
-        <div class="group">
-          <img class="group-img" src="./../assets/icon-mv.png">
-          <p class="group-p">MV</p>
-        </div>
-        <div class="mv-item"
-             @click="openmv(item.vid)"
-             v-for="item in searchRes.mv.itemlist">
-          <p class="mv-name">{{item.name}}</p>
-          <p class="mv-author">{{item.singer}}</p>
-        </div> -->
       </div>
     </div>
   </div>
@@ -95,12 +40,10 @@
         key: '',
         hotkey: null,
         searchRes: null,
-        searchHistory: [],
         searchShow: false,
         menuShow: false,
         menuedIndex: 0,
         menus: {},
-        isAlbumShow: false,
         isSingerShow: false,
         mid: 0,
         singermid: 0
@@ -142,7 +85,7 @@
         this.$store.dispatch('notifyActionSheet', {
           menus: {
             'title.noop': this.searchRes.song.itemlist[num].name + '<br/><span style="color:#666;font-size:12px;">' + this.searchRes.song.itemlist[num].singer + '</span>',
-            playAsNext: '下一首播放',
+            
             addToPlayList: '添加到播放列表'
           },
           handler: {

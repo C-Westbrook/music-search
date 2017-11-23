@@ -1,6 +1,6 @@
 
 export default {
- 
+  
   search: {
     url: 'https://c.y.qq.com/splcloud/fcgi-bin/smartbox_new.fcg',
     params: (key) => {
@@ -38,7 +38,17 @@ export default {
     jsonp: 'jsonpCallback'
   },
   
-
+  lyric: {
+    url: 'https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric.fcg',
+    params: (id) => {
+      return {
+        nobase64:1,
+        musicid:id,
+        songtype:0
+      }
+    },
+    jsonp:'callback'
+  },
   
   first_page_data:{
     url:"https://c.y.qq.com/v8/fcg-bin/fcg_first_yqq.fcg",

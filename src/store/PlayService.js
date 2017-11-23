@@ -61,14 +61,7 @@ export default {
     pause (state) {
       state.playing = false
     },
-    playFront (state) {
-      state.index = (state.index - 1 + state.playList.length) % state.playList.length
-      state.song = state.playList[state.index]
-    },
-    playNext (state) {
-      state.index = (state.index + 1) % state.playList.length
-      state.song = state.playList[state.index]
-    },
+    
     playContinue (state) {
       switch (state.playMode) {
         case def.SINGLE:
@@ -86,9 +79,7 @@ export default {
     changePlayMode (state) {
       state.playMode = (state.playMode + 1) % 3
     },
-    setAlbummid(state,albummid){
-      state.song = {...state.song,albummid}
-    }
+    
   },
   getters: {
     currentTime: state =>

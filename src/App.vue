@@ -23,11 +23,11 @@
                @ended="playContinue"
                autoplay></audio>
         <!--歌手图片-->
-        <div class="play-bar-image-container" >
+        <div class="play-bar-image-container" @touchstart="showPlayPage" @click="showPlayPage">
           <img class="play-bar-image" v-lazy="coverImgUrl">
         </div>
         <!--歌名-->
-        <p class="play-bar-text" @touchstart="showPlayPage" >{{song.name}}</p>
+        <p class="play-bar-text" @touchstart="showPlayPage" @click="showPlayPage">{{song.name}}</p>
         <!--暂停或播放-->
         <img class="play-bar-button"
              :src="playing?iconPause:iconPlay"
@@ -40,12 +40,14 @@
 
 <script type="text/ecmascript-6">
   import Search from './components/Search'
+  import Play from './components/Play'
   import {mapMutations, mapState, mapGetters} from 'vuex'
 
 
   export default {
     components: {
       Search,
+      Play
     },
     methods: {
       tapButton(event) {
