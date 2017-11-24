@@ -17,15 +17,19 @@
         取消
       </div>
     </div>
+    
     <div class="result" v-if="searchRes!=null&&searchShow">
       <div class="result-group" v-if="searchRes.song!=null">
-         <div class="group">
+        <div class="group">
           <img class="group-img" src="./../assets/icon-music.png">
           <p class="group-p">歌曲</p>
-        </div> 
+        </div>
         <div class="result-item" v-for="(item, index) in searchRes.song.itemlist">
           <p class="result-title" @click="play(index)">{{item.name}}</p>
           <p class="result-author" @click="play(index)">-{{item.singer}}</p>
+          <div class="action-button" @touchend.prevent="showMenu(index)" @click="showMenu(index)">
+             <img src="./../assets/icon-...black.png">
+          </div>
         </div>
       </div>
       </div>
@@ -40,10 +44,12 @@
         key: '',
         hotkey: null,
         searchRes: null,
+        searchHistory: [],
         searchShow: false,
         menuShow: false,
         menuedIndex: 0,
         menus: {},
+        isAlbumShow: false,
         isSingerShow: false,
         mid: 0,
         singermid: 0
@@ -85,7 +91,7 @@
         this.$store.dispatch('notifyActionSheet', {
           menus: {
             'title.noop': this.searchRes.song.itemlist[num].name + '<br/><span style="color:#666;font-size:12px;">' + this.searchRes.song.itemlist[num].singer + '</span>',
-            
+            playAsNext: '下一首播放',
             addToPlayList: '添加到播放列表'
           },
           handler: {

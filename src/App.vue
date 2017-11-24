@@ -1,10 +1,13 @@
-﻿﻿<template>
+﻿<template>
   <div id="app">
-<!--搜索框-->
+    <!--弹出框-->
+    <action-sheet></action-sheet>
+   <!--搜索框-->
     <search v-show="!blurBgShow"
             @searchshow="rankshow=false"
             @searchhide="rankshow=true"></search>
-    <transition name="play-slide"
+    <!--弹出框内容-->
+     <transition name="play-slide"
                 @after-enter="showBlurBg"
                 @before-leave="hideBlurBg"
                 @after-leave="routerViewAnimation='page-slide'">
@@ -22,13 +25,13 @@
                @timeupdate="updateTime"
                @ended="playContinue"
                autoplay></audio>
-        <!--歌手图片-->
+         <!--歌手图片-->
         <div class="play-bar-image-container" @touchstart="showPlayPage" @click="showPlayPage">
           <img class="play-bar-image" v-lazy="coverImgUrl">
         </div>
-        <!--歌名-->
+         <!--歌名-->
         <p class="play-bar-text" @touchstart="showPlayPage" @click="showPlayPage">{{song.name}}</p>
-        <!--暂停或播放-->
+         <!--暂停或播放-->
         <img class="play-bar-button"
              :src="playing?iconPause:iconPlay"
              @touchend="tapButton"
@@ -41,13 +44,19 @@
 <script type="text/ecmascript-6">
   import Search from './components/Search'
   import Play from './components/Play'
+  import ActionSheet from './components/ActionSheet'
+  import PlayingList from './components/PlayingList'
+
   import {mapMutations, mapState, mapGetters} from 'vuex'
 
 
   export default {
     components: {
       Search,
-      Play
+      Play,
+      ActionSheet,
+      PlayingList
+  
     },
     methods: {
       tapButton(event) {
@@ -85,7 +94,14 @@
         blurBgShow: false,
         rankshow: true,
         routerViewAnimation: 'page-slide',
-        
+        swiperOption: {
+          pagination: '.swiper-pagination',
+          paginationClickable: true,
+          paginationBulletRender(swiper, index, className) {
+            return `<span class="${className} swiper-pagination-bullet-custom">${TAB_NAME[index]}</span>`
+            // return '<span class="' + className + ' swiper-pagination-bullet-custom' + '">' + (index + 1) + '</span>';
+          }
+        }
       }
     },
     computed: {
@@ -108,6 +124,18 @@
           document.getElementById('music').pause()
         }
       },
+      song(song) {
+        if (this.$store.state.PlayService.playList.length > 0 && typeof song.albummid === 'undefined') {
+          this.$http.jsonp('http://120.27.93.97/weappserver/get_music_info.php', {
+            params: {
+              mid: song.mid
+            },
+            jsonp: 'callback'
+          }).then((response) => {
+            this.$store.commit('setAlbummid', response.data.albummid)
+          })
+        }
+      }
     }
   }
 </script>
@@ -238,36 +266,6 @@
     }
   }
 
-  /*border-1px 部分*/
-  /*.border-1px {
-    position: relative;
-  }
-
-  .border-1px-after:after {
-    border-top: 1px solid #d0d0d0;
-    content: ' ';
-    display: block;
-    width: 100%;
-    position: absolute;
-    left: 0;
-  }
-
-  .border-1px-before:before {
-    border-top: 1px solid #d0d0d0;
-    content: ' ';
-    display: block;
-    width: 100%;
-    position: absolute;
-    left: 0;
-  }
-
-  .border-1px:before {
-    top: 0;
-  }
-
-  .border-1px:after {
-    bottom: 0;
-  }*/
 
   @media (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5) {
     .border-1px:after, .border-1px:before {

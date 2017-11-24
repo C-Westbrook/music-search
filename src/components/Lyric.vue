@@ -1,7 +1,7 @@
 <template>
-   <div id="lyric">
+  <div id="lyric">
     <p class="lyric-item" v-for="v in currentLyric">{{v}}</p>
-  </div> 
+  </div>
 </template>
 
 <script type="text/ecmascript-6">

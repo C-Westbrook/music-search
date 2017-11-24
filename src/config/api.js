@@ -20,23 +20,6 @@ export default {
     },
     jsonp: 'jsonpCallback'
   },
-  hotkey: {
-    url: 'https://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg',
-    params: () => {
-      return {
-        g_tk: 5381,
-        loginUin: 0,
-        hostUin: 0,
-        format: 'jsonp',
-        inCharset: 'utf8',
-        outCharset: 'utf-8',
-        notice: 0,
-        platform: 'yqq',
-        needNewCode: 0
-      }
-    },
-    jsonp: 'jsonpCallback'
-  },
   
   lyric: {
     url: 'https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric.fcg',

@@ -28,19 +28,27 @@
       </div>
       <div class="lyric">
         <lyric :songid="song.id" :currentTime="currentTime"></lyric>
-      </div> 
+      </div>
       <div class="music-ctrl">
         <ul>
+          <!--收藏-->
           <li><img src="../assets/icon-like.png"></li>
+          <!--上一曲-->
           <li><img src="../assets/icon-shangyiqu.png"
-                   ></li>
+                    @touchend.prevent="playFront"
+                   @click="playFront"></li>
+           <!--暂停-->
           <li><img :src="playing?$parent.iconPause:$parent.iconPlay"
                    @click="$parent.tapButton"
                    @touchend="$parent.tapButton"></li>
+           <!--下一曲-->
           <li><img src="../assets/icon-xiayiqu.png"
-                   ></li>
+                   @touchend.prevent="playNext"
+                   @click="playNext"></li>
+           <!--播放列表-->
           <li><img src="../assets/icon-list.png"
-                   ></li>
+                   @touchend.prevent="showPlayList"
+                   @click="showPlayList"></li>
         </ul>
       </div>
 
@@ -135,7 +143,7 @@
     left: 0;
     bottom: 0;
     top: 100vw;
-    background: #42b983;
+    background: rgba(255, 255, 255, 0.76);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -203,15 +211,12 @@
     text-align: center;
     font-weight: bold;
     font-size: 18px;
-   /* height: 100px;
-    line-height: 100px;*/
   }
 
   .music-play-page .button-group .music-info .music-author {
     text-align: center;
     font-size: 12px;
     color: #8f8f8f;
-    /*height: 80px;*/
   }
 
   .music-play-page .button-group .music-ctrl {
